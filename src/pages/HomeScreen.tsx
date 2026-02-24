@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Shield, MapPin, ChevronRight } from "lucide-react";
+import { Shield, MapPin, ChevronRight, Calendar, BarChart3 } from "lucide-react";
 
 const HomeScreen = () => {
   const navigate = useNavigate();
@@ -86,6 +86,33 @@ const HomeScreen = () => {
         </div>
       </div>
 
+      {/* Quick Actions */}
+      <div
+        className="mt-5 grid grid-cols-2 gap-3 animate-fade-in-up"
+        style={{ animationDelay: "0.4s" }}
+      >
+        <button
+          onClick={() => navigate("/planner")}
+          className="flex items-center gap-3 rounded-2xl bg-gradient-card border border-border p-4 text-left transition-all active:scale-[0.98]"
+        >
+          <Calendar className="h-5 w-5 text-primary shrink-0" />
+          <div>
+            <p className="text-sm font-semibold text-foreground">Trip Planner</p>
+            <p className="text-[10px] text-muted-foreground">Plan safe journeys</p>
+          </div>
+        </button>
+        <button
+          onClick={() => navigate("/history")}
+          className="flex items-center gap-3 rounded-2xl bg-gradient-card border border-border p-4 text-left transition-all active:scale-[0.98]"
+        >
+          <BarChart3 className="h-5 w-5 text-primary shrink-0" />
+          <div>
+            <p className="text-sm font-semibold text-foreground">Insights</p>
+            <p className="text-[10px] text-muted-foreground">Safety analytics</p>
+          </div>
+        </button>
+      </div>
+
       {/* Spacer */}
       <div className="flex-1" />
 
@@ -93,7 +120,7 @@ const HomeScreen = () => {
       <button
         onClick={() => navigate("/map")}
         className="mt-8 flex w-full items-center justify-center gap-2 rounded-2xl bg-primary py-4 text-primary-foreground font-semibold text-lg transition-all active:scale-[0.98] glow-green animate-fade-in-up"
-        style={{ animationDelay: "0.45s" }}
+        style={{ animationDelay: "0.5s" }}
       >
         Open Safety Map
         <ChevronRight className="h-5 w-5" />
