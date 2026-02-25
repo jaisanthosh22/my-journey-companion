@@ -1,16 +1,24 @@
 import { useNavigate } from "react-router-dom";
-import { Shield, MapPin, ChevronRight, Calendar, BarChart3 } from "lucide-react";
+import { Shield, MapPin, ChevronRight, Calendar, BarChart3, Mic, Bell, Siren } from "lucide-react";
 
 const HomeScreen = () => {
   const navigate = useNavigate();
 
+  const features = [
+    { icon: MapPin, title: "Crime Heatmap", desc: "Visualize risk zones with live, color-coded overlays on your route." },
+    { icon: Shield, title: "Route Safety Score", desc: "Every route rated 1–10 so you always pick the safest path." },
+    { icon: Mic, title: "AI Voice Companion", desc: "Hands-free safety guidance that speaks up when it matters most." },
+    { icon: Siren, title: "Emergency SOS", desc: "One-tap alert to contacts and services when you need help fast." },
+    { icon: Bell, title: "Predictive Alerts", desc: "AI-driven notifications before you enter higher-risk areas." },
+  ];
+
   return (
-    <div className="flex min-h-screen flex-col bg-gradient-dark px-5 pt-14 pb-8">
+    <main className="flex min-h-screen flex-col bg-gradient-dark px-5 pt-14 pb-8">
       {/* Greeting */}
-      <div className="animate-fade-in">
+      <header className="animate-fade-in">
         <p className="text-muted-foreground text-sm font-medium">Good evening</p>
         <h1 className="text-2xl font-bold text-foreground mt-1">Welcome back 👋</h1>
-      </div>
+      </header>
 
       {/* Safety Summary Card */}
       <div
@@ -113,8 +121,23 @@ const HomeScreen = () => {
         </button>
       </div>
 
-      {/* Spacer */}
-      <div className="flex-1" />
+      {/* Feature Highlights */}
+      <section
+        className="mt-6 space-y-3 animate-fade-in-up"
+        style={{ animationDelay: "0.45s" }}
+        aria-label="Key features"
+      >
+        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Why MyJourneyCompanion</h2>
+        {features.map((f, i) => (
+          <div key={i} className="flex items-start gap-3 rounded-2xl bg-gradient-card border border-border p-4">
+            <f.icon className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+            <div>
+              <p className="text-sm font-semibold text-foreground">{f.title}</p>
+              <p className="text-xs text-muted-foreground leading-relaxed">{f.desc}</p>
+            </div>
+          </div>
+        ))}
+      </section>
 
       {/* CTA Button */}
       <button
@@ -125,7 +148,7 @@ const HomeScreen = () => {
         Open Safety Map
         <ChevronRight className="h-5 w-5" />
       </button>
-    </div>
+    </main>
   );
 };
 
