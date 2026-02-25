@@ -11,6 +11,7 @@ import TravelPlannerScreen from "./pages/TravelPlannerScreen";
 import TripHistoryScreen from "./pages/TripHistoryScreen";
 import ProfileScreen from "./pages/ProfileScreen";
 import NotFound from "./pages/NotFound";
+import MainLayout from "./components/MainLayout";
 
 const queryClient = new QueryClient();
 
@@ -22,12 +23,14 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SplashScreen />} />
-          <Route path="/home" element={<HomeScreen />} />
-          <Route path="/map" element={<MapScreen />} />
+          <Route element={<MainLayout />}>
+            <Route path="/home" element={<HomeScreen />} />
+            <Route path="/map" element={<MapScreen />} />
+            <Route path="/planner" element={<TravelPlannerScreen />} />
+            <Route path="/history" element={<TripHistoryScreen />} />
+            <Route path="/profile" element={<ProfileScreen />} />
+          </Route>
           <Route path="/navigation" element={<NavigationScreen />} />
-          <Route path="/planner" element={<TravelPlannerScreen />} />
-          <Route path="/history" element={<TripHistoryScreen />} />
-          <Route path="/profile" element={<ProfileScreen />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

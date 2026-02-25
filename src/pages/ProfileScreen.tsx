@@ -1,13 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import {
   User, Shield, MapPin, Route, Bell, Mic, ShieldCheck, Share2,
-  Phone, Pencil, Home, Map, Clock, ChevronRight, AlertTriangle,
+  Phone, Pencil, AlertTriangle,
   TrendingUp, PhoneCall,
 } from "lucide-react";
 import { useState } from "react";
 
 const ProfileScreen = () => {
-  const navigate = useNavigate();
 
   const [prefs, setPrefs] = useState({
     nightAlerts: true,
@@ -139,29 +137,6 @@ const ProfileScreen = () => {
         </div>
       </section>
 
-      {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-border bg-background/90 backdrop-blur-xl px-2 py-2.5">
-        {[
-          { icon: Home, label: "Home", path: "/home" },
-          { icon: Map, label: "Map", path: "/map" },
-          { icon: Clock, label: "History", path: "/history" },
-          { icon: User, label: "Profile", path: "/profile" },
-        ].map((tab) => {
-          const isActive = tab.path === "/profile";
-          return (
-            <button
-              key={tab.label}
-              onClick={() => navigate(tab.path)}
-              className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl transition-colors ${
-                isActive ? "text-primary" : "text-muted-foreground"
-              }`}
-            >
-              <tab.icon className="h-5 w-5" />
-              <span className="text-[10px] font-medium">{tab.label}</span>
-            </button>
-          );
-        })}
-      </nav>
     </main>
   );
 };
