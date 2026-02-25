@@ -88,7 +88,10 @@ const TripHistoryScreen = () => {
 
       {/* Recent Trips */}
       <div className="mt-4 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-        <p className="text-sm font-semibold text-foreground mb-3">Recent Trips</p>
+        <div className="flex items-center justify-between mb-3">
+          <p className="text-sm font-semibold text-foreground">Recent Trips</p>
+          <span className="text-[10px] text-muted-foreground bg-secondary/60 rounded-full px-2.5 py-0.5">Sample data · Updates with your trips</span>
+        </div>
         <div className="flex flex-col gap-2">
           {recentTrips.map((trip) => {
             const badge = riskBadge(trip.risk);
