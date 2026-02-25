@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Shield, MapPin, ChevronRight, Calendar, BarChart3, Mic, Bell, Siren } from "lucide-react";
+import { Shield, MapPin, ChevronRight, Calendar, BarChart3, Mic, Bell, Siren, User } from "lucide-react";
 
 const HomeScreen = () => {
   const navigate = useNavigate();
@@ -15,9 +15,18 @@ const HomeScreen = () => {
   return (
     <main className="flex min-h-screen flex-col bg-gradient-dark px-5 pt-14 pb-8">
       {/* Greeting */}
-      <header className="animate-fade-in">
-        <p className="text-muted-foreground text-sm font-medium">Good evening</p>
-        <h1 className="text-2xl font-bold text-foreground mt-1">Welcome back 👋</h1>
+      <header className="animate-fade-in flex items-center justify-between">
+        <div>
+          <p className="text-muted-foreground text-sm font-medium">Good evening</p>
+          <h1 className="text-2xl font-bold text-foreground mt-1">Welcome back 👋</h1>
+        </div>
+        <button
+          onClick={() => navigate("/profile")}
+          className="h-16 w-16 rounded-full border-2 border-primary/60 bg-secondary flex items-center justify-center overflow-hidden glow-green transition-transform active:scale-95"
+          aria-label="Go to profile"
+        >
+          <User className="h-8 w-8 text-muted-foreground" />
+        </button>
       </header>
 
       {/* Safety Summary Card */}
