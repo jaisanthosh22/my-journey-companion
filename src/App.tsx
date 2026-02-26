@@ -10,6 +10,7 @@ import NavigationScreen from "./pages/NavigationScreen";
 import TravelPlannerScreen from "./pages/TravelPlannerScreen";
 import TripHistoryScreen from "./pages/TripHistoryScreen";
 import ProfileScreen from "./pages/ProfileScreen";
+import AboutScreen from "./pages/AboutScreen";
 import NotFound from "./pages/NotFound";
 import MainLayout from "./components/MainLayout";
 
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/planner" element={<TravelPlannerScreen />} />
             <Route path="/history" element={<TripHistoryScreen />} />
             <Route path="/profile" element={<ProfileScreen />} />
+            <Route path="/about" element={<AboutScreen />} />
           </Route>
           <Route path="/navigation" element={<NavigationScreen />} />
           <Route path="*" element={<NotFound />} />
