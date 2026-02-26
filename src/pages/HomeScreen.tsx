@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { Shield, MapPin, ChevronRight, Calendar, BarChart3, Mic, Bell, Siren, User } from "lucide-react";
+import { useProfileImage } from "@/hooks/use-profile-image";
 
 const HomeScreen = () => {
   const navigate = useNavigate();
+  const { image } = useProfileImage();
 
   const features = [
     { icon: MapPin, title: "Crime Heatmap", desc: "Visualize risk zones with live, color-coded overlays on your route." },
@@ -25,7 +27,11 @@ const HomeScreen = () => {
           className="h-16 w-16 rounded-full border-2 border-primary/60 bg-secondary flex items-center justify-center overflow-hidden glow-green transition-transform active:scale-95"
           aria-label="Go to profile"
         >
-          <User className="h-8 w-8 text-muted-foreground" />
+          {image ? (
+            <img src={image} alt="Profile" className="h-full w-full object-cover" />
+          ) : (
+            <User className="h-8 w-8 text-muted-foreground" />
+          )}
         </button>
       </header>
 

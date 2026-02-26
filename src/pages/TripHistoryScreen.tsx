@@ -1,13 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Shield, TrendingUp, AlertTriangle, MapPin, ChevronRight } from "lucide-react";
-
-const recentTrips = [
-  { id: 1, from: "Coimbatore", to: "Madurai", date: "Feb 20, 2026", score: 8.2, risk: "Low" },
-  { id: 2, from: "Chennai", to: "Bangalore", date: "Feb 18, 2026", score: 6.5, risk: "Medium" },
-  { id: 3, from: "Hyderabad", to: "Vizag", date: "Feb 15, 2026", score: 9.1, risk: "Low" },
-  { id: 4, from: "Mumbai", to: "Pune", date: "Feb 12, 2026", score: 5.3, risk: "High" },
-  { id: 5, from: "Delhi", to: "Agra", date: "Feb 10, 2026", score: 7.0, risk: "Medium" },
-];
+import { recentTrips } from "@/data/trip-history";
 
 const weeklyData = [4, 6, 5, 8, 7, 9, 7.8];
 const weekDays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
