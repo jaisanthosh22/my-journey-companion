@@ -1,11 +1,14 @@
 import {
   User, Shield, MapPin, Route, Bell, Mic, ShieldCheck, Share2,
-  Phone, Pencil, AlertTriangle,
-  TrendingUp, PhoneCall,
+  Pencil, AlertTriangle, TrendingUp, PhoneCall, Camera,
 } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { useProfileImage } from "@/hooks/use-profile-image";
+import { recentTrips, computeSafetyStats } from "@/data/trip-history";
 
 const ProfileScreen = () => {
+  const { image, updateImage } = useProfileImage();
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [prefs, setPrefs] = useState({
     nightAlerts: true,
@@ -17,11 +20,13 @@ const ProfileScreen = () => {
   const toggle = (key: keyof typeof prefs) =>
     setPrefs((p) => ({ ...p, [key]: !p[key] }));
 
+  const computed = computeSafetyStats(recentTrips);
+
   const stats = [
-    { icon: Route, label: "Trips Completed", value: "18", color: "text-primary" },
-    { icon: TrendingUp, label: "Avg Safety Score", value: "8.4/10", color: "text-primary" },
-    { icon: MapPin, label: "Safe Routes Chosen", value: "14", color: "text-primary" },
-    { icon: AlertTriangle, label: "Risk Alerts Avoided", value: "6", color: "text-destructive" },
+    { icon: Route, label: "Trips Completed", value: String(computed.tripsCompleted), color: "text-primary" },
+    { icon: TrendingUp, label: "Avg Safety Score", value: computed.avgSafetyScore, color: "text-primary" },
+    { icon: MapPin, label: "Safe Routes Chosen", value: String(computed.safeRoutesChosen), color: "text-primary" },
+    { icon: AlertTriangle, label: "Risk Alerts Avoided", value: String(computed.riskAlertsAvoided), color: "text-destructive" },
   ];
 
   const toggleItems = [
@@ -31,17 +36,37 @@ const ProfileScreen = () => {
     { key: "shareLive" as const, icon: Share2, label: "Share Live Location" },
   ];
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) updateImage(file);
+  };
+
   return (
     <main className="flex min-h-screen flex-col bg-gradient-dark px-5 pt-12 pb-24">
       {/* Profile Header */}
       <section className="flex flex-col items-center animate-fade-in">
         <div className="relative">
-          <div className="h-24 w-24 rounded-full bg-secondary border-2 border-primary/40 flex items-center justify-center overflow-hidden glow-green">
-            <User className="h-12 w-12 text-muted-foreground" />
-          </div>
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="h-24 w-24 rounded-full bg-secondary border-2 border-primary/40 flex items-center justify-center overflow-hidden glow-green transition-transform active:scale-95"
+            aria-label="Change profile photo"
+          >
+            {image ? (
+              <img src={image} alt="Profile" className="h-full w-full object-cover" />
+            ) : (
+              <User className="h-12 w-12 text-muted-foreground" />
+            )}
+          </button>
           <div className="absolute -bottom-1 -right-1 h-7 w-7 rounded-full bg-primary flex items-center justify-center border-2 border-background">
-            <Shield className="h-3.5 w-3.5 text-primary-foreground" />
+            <Camera className="h-3.5 w-3.5 text-primary-foreground" />
           </div>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleFileChange}
+          />
         </div>
 
         <h1 className="mt-4 text-xl font-bold text-foreground">Arjun Mehta</h1>
@@ -66,7 +91,7 @@ const ProfileScreen = () => {
         <div className="grid grid-cols-2 gap-4">
           {stats.map((s, i) => (
             <div key={i} className="flex items-center gap-3">
-              <div className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-secondary/70`}>
+              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-secondary/70">
                 <s.icon className={`h-4 w-4 ${s.color}`} />
               </div>
               <div>
@@ -98,7 +123,7 @@ const ProfileScreen = () => {
                 }`}
               >
                 <span
-                  className={`inline-block h-4.5 w-4.5 rounded-full bg-foreground shadow-md transition-transform ${
+                  className={`inline-block rounded-full bg-foreground shadow-md transition-transform ${
                     prefs[item.key] ? "translate-x-[22px]" : "translate-x-[3px]"
                   }`}
                   style={{ width: 18, height: 18 }}
@@ -136,7 +161,6 @@ const ProfileScreen = () => {
           </div>
         </div>
       </section>
-
     </main>
   );
 };
