@@ -1,5 +1,5 @@
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { Home, Map, Clock, User } from "lucide-react";
+import { Home, Map, Clock, User, Info } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const tabs = [
@@ -7,6 +7,7 @@ const tabs = [
   { icon: Map, label: "Map", path: "/map" },
   { icon: Clock, label: "History", path: "/history" },
   { icon: User, label: "Profile", path: "/profile" },
+  { icon: Info, label: "About", path: "/about" },
 ];
 
 const MainLayout = () => {

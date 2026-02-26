@@ -1,14 +1,29 @@
 import {
   User, Shield, MapPin, Route, Bell, Mic, ShieldCheck, Share2,
-  Pencil, AlertTriangle, TrendingUp, PhoneCall, Camera,
+  Pencil, AlertTriangle, TrendingUp, PhoneCall, Camera, Check, X,
 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useProfileImage } from "@/hooks/use-profile-image";
 import { recentTrips, computeSafetyStats } from "@/data/trip-history";
 
 const ProfileScreen = () => {
   const { image, updateImage } = useProfileImage();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [name, setName] = useState(() => localStorage.getItem("profile_name") || "Arjun Mehta");
+  const [draftName, setDraftName] = useState(name);
+
+  const saveName = () => {
+    const trimmed = draftName.trim() || name;
+    setName(trimmed);
+    localStorage.setItem("profile_name", trimmed);
+    setIsEditingName(false);
+  };
+
+  const cancelEdit = () => {
+    setDraftName(name);
+    setIsEditingName(false);
+  };
 
   const [prefs, setPrefs] = useState({
     nightAlerts: true,
@@ -69,17 +84,40 @@ const ProfileScreen = () => {
           />
         </div>
 
-        <h1 className="mt-4 text-xl font-bold text-foreground">Arjun Mehta</h1>
+        {isEditingName ? (
+          <div className="mt-4 flex items-center gap-2">
+            <input
+              autoFocus
+              value={draftName}
+              onChange={(e) => setDraftName(e.target.value)}
+              onKeyDown={(e) => { if (e.key === "Enter") saveName(); if (e.key === "Escape") cancelEdit(); }}
+              className="h-9 w-44 rounded-xl border border-border bg-secondary px-3 text-sm font-bold text-foreground outline-none focus:border-primary"
+            />
+            <button onClick={saveName} className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
+              <Check className="h-4 w-4 text-primary-foreground" />
+            </button>
+            <button onClick={cancelEdit} className="h-8 w-8 rounded-full bg-secondary flex items-center justify-center border border-border">
+              <X className="h-4 w-4 text-muted-foreground" />
+            </button>
+          </div>
+        ) : (
+          <>
+            <h1 className="mt-4 text-xl font-bold text-foreground">{name}</h1>
 
-        <span className="mt-1.5 inline-flex items-center gap-1.5 rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">
-          <Shield className="h-3 w-3" />
-          Safety Explorer
-        </span>
+            <span className="mt-1.5 inline-flex items-center gap-1.5 rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold text-primary">
+              <Shield className="h-3 w-3" />
+              Safety Explorer
+            </span>
 
-        <button className="mt-4 rounded-xl border border-border px-5 py-2 text-xs font-medium text-muted-foreground transition-all active:scale-[0.97] hover:border-primary/40 hover:text-foreground">
-          <Pencil className="inline h-3 w-3 mr-1.5 -mt-px" />
-          Edit Profile
-        </button>
+            <button
+              onClick={() => { setDraftName(name); setIsEditingName(true); }}
+              className="mt-4 rounded-xl border border-border px-5 py-2 text-xs font-medium text-muted-foreground transition-all active:scale-[0.97] hover:border-primary/40 hover:text-foreground"
+            >
+              <Pencil className="inline h-3 w-3 mr-1.5 -mt-px" />
+              Edit Profile
+            </button>
+          </>
+        )}
       </section>
 
       {/* Safety Statistics */}
