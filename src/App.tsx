@@ -5,7 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SplashScreen from "./pages/SplashScreen";
 import HomeScreen from "./pages/HomeScreen";
-import MapScreen from "./pages/MapScreen";
+import MapScreen from "./components/Map/MapScreen";
 import NavigationScreen from "./pages/NavigationScreen";
 import TravelPlannerScreen from "./pages/TravelPlannerScreen";
 import TripHistoryScreen from "./pages/TripHistoryScreen";

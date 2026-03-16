@@ -112,3 +112,286 @@
     box-shadow: 0 0 12px hsl(0 100% 65% / 0.5);
   }
 }
+/* =========================
+   MAP STYLES
+========================= */
+
+/* =========================
+   MAP STYLES
+========================= */
+
+/* =========================
+   MAIN PAGE LAYOUT (FIXED)
+========================= */
+
+/* 🔥 CRITICAL FIX */
+.map-page .map-fill {
+  flex: 1;
+  display: flex;
+  position: relative;
+  min-height: 0;
+}
+
+.map-page .map-container {
+  flex: 1;
+  display: flex;
+  height: 100%;
+  min-height: 0;
+}
+
+.map-page .leaflet-map {
+  flex: 1;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.map-page .leaflet-container {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+/* Main wrapper */
+.map-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Header fixed height */
+.map-page header {
+  flex-shrink: 0;
+}
+
+/* Top search panel fixed height */
+.map-page .top-panel {
+  flex-shrink: 0;
+}
+
+/* 🔥 IMPORTANT FIX */
+.map-page .map-fill {
+  flex: 1 1 auto;
+  position: relative;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+}
+
+/* 🔥 Leaflet full height */
+.map-page .map-fill .leaflet-container {
+  flex: 1;
+  height: 100% !important;
+  width: 100% !important;
+}
+
+:root {
+  --map-bg: #ffffff;
+  --map-panel: #f2f2f2;
+  --map-text: #000000;
+}
+
+.map-page.dark {
+  --map-bg: #0f172a;
+  --map-panel: #1e293b;
+  --map-text: #ffffff;
+}
+
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* =========================
+   MAIN PAGE LAYOUT
+========================= */
+.map-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;       /* 🔥 Important */
+  width: 100%;
+  background: var(--map-bg);
+  color: var(--map-text);
+  overflow: hidden;    /* Prevent scroll */
+}
+
+/* =========================
+   HEADER
+========================= */
+.map-page header {
+  background: linear-gradient(90deg, #2563eb, #0ea5e9);
+  color: white;
+  padding: 14px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* =========================
+   TOP PANEL
+========================= */
+.map-page .top-panel {
+  background: var(--map-panel);
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  flex-shrink: 0;
+}
+
+.map-page .input-row {
+  display: flex;
+  gap: 8px;
+}
+
+.map-page .top-panel input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  background: var(--map-bg);
+  color: var(--map-text);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.map-page .voice-btn {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.map-page .voice-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.map-page .voice-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* =========================
+   SUGGESTIONS
+========================= */
+.map-page .suggestions {
+  background: var(--map-bg);
+  margin-top: 5px;
+  border-radius: 8px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.map-page .suggestions li,
+.map-page .suggestions div {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.map-page .suggestions li:hover,
+.map-page .suggestions div:hover {
+  background: #38bdf8;
+  color: white;
+}
+
+/* =========================
+   SAFETY INFO
+========================= */
+.map-page .info {
+  padding: 8px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* =========================
+   MAP CONTAINER (CRITICAL FIX)
+========================= */
+.map-page {
+  flex: 1;
+  position: relative;
+  min-height: 0;
+}
+
+/* Leaflet container must fill */
+.map-page .map-fill .leaflet-container {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+
+.map-page .controls {
+  position: absolute; /* better than fixed inside layout */
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 1000;
+}
+
+.map-page .btn {
+  padding: 14px;
+  border-radius: 50%;
+  border: none;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: 0.2s;
+}
+
+.map-page .btn:hover {
+  transform: scale(1.05);
+}
+
+.map-page .btn.mode {
+  background: #111827;
+}
+
+.map-page .btn.sos {
+  background: red;
+}
+
+.map-page .btn.call {
+  background: green;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out forwards;
+}
+
+

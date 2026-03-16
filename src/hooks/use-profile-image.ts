@@ -1,24 +1,48 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 
-const STORAGE_KEY = "mjc_profile_image";
+type UseProfileImageResult = {
+  image: string | null;
+  updateImage: (file: File) => void;
+  clearImage: () => void;
+};
 
-export function useProfileImage() {
+const STORAGE_KEY = "profile_image";
+
+export function useProfileImage(): UseProfileImageResult {
   const [image, setImage] = useState<string | null>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) setImage(saved);
+    if (typeof window === "undefined") return;
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    if (stored) {
+      setImage(stored);
+    }
   }, []);
 
-  const updateImage = (file: File) => {
+  const updateImage = useCallback((file: File) => {
+    if (!file) return;
     const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64 = reader.result as string;
-      localStorage.setItem(STORAGE_KEY, base64);
-      setImage(base64);
+    reader.onload = () => {
+      const result = typeof reader.result === "string" ? reader.result : null;
+      if (result) {
+        setImage(result);
+        try {
+          window.localStorage.setItem(STORAGE_KEY, result);
+        } catch {
+          // ignore quota errors
+        }
+      }
     };
     reader.readAsDataURL(file);
-  };
+  }, []);
 
-  return { image, updateImage };
+  const clearImage = useCallback(() => {
+    setImage(null);
+    if (typeof window !== "undefined") {
+      window.localStorage.removeItem(STORAGE_KEY);
+    }
+  }, []);
+
+  return { image, updateImage, clearImage };
 }
+
